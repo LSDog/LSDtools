@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="LSDtools">
+    <output-path>$PROJECT_DIR$/out/artifacts/LSDtools</output-path>
+    <root id="archive" name="LSDtools.jar">
+      <element id="module-output" name="LSDtools" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/plugin.yml" />
+    </root>
+  </artifact>
+</component>
