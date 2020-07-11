@@ -2,3 +2,10 @@ name: LSDtools
 main: LSDtools.LSDtools
 version: 0.1
 author: LSDog
+commands:
+  LSDtools:
+    description: Info of LSDtools
+    usage: /LSDtools
+    aliases: [Lt]
+    permission: "LSDtools.info"
+    permission-message: "no permission ;-;"

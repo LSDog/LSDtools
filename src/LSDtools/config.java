@@ -1,4 +1,4 @@
-package fun.LSDog.LSDtools;
+package LSDtools;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -7,8 +7,10 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.net.InetSocketAddress;
 import java.nio.charset.StandardCharsets;
 import java.util.logging.Level;
@@ -50,12 +52,12 @@ public class config extends JavaPlugin {
 
     public void saveDefaultConfig() {
         if (customConfigFile == null) {
-            customConfigFile = new File(getDataFolder(), "customConfig.yml");
+            customConfigFile = new File(getDataFolder(), "data.yml");
         }
         if (!customConfigFile.exists()) {
             Plugin plugin = null;
             assert false;
-            plugin.saveResource("customConfig.yml", false);
+            plugin.saveResource("data.yml", false);
         }
     }
 

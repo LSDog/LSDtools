@@ -4,7 +4,7 @@
     <facet type="minecraft" name="Minecraft">
       <configuration>
         <autoDetectTypes>
-          <platformType>BUKKIT</platformType>
+          <platformType>SPIGOT</platformType>
         </autoDetectTypes>
       </configuration>
     </facet>
@@ -16,6 +16,6 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" exported="" name="craftbukkit-1.8.8" level="project" />
+    <orderEntry type="library" exported="" name="spigot-1.8.8" level="project" />
   </component>
 </module>
