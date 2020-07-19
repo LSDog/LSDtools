@@ -6,6 +6,12 @@ commands:
   LSDtools:
     description: Info of LSDtools
     usage: /LSDtools
-    aliases: [Lt]
+    aliases: []
     permission: "LSDtools.info"
+    permission-message: "no permission ;-;"
+  checkplayers:
+    description: Check player's ip
+    usage: /checkplayers
+    aliases: []
+    permission: "LSDtools.check"
     permission-message: "no permission ;-;"
