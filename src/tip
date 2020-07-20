@@ -1,0 +1,2 @@
+commit 后在控制台输入指令 push ↓
+>git push -u origin master -f

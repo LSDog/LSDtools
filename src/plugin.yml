@@ -1,17 +1,23 @@
 name: LSDtools
 main: LSDtools.LSDtools
-version: 0.1
+version: 0.2
 author: LSDog
 commands:
   LSDtools:
     description: Info of LSDtools
-    usage: /LSDtools
-    aliases: []
+#    usage: /LSDtools
+#    aliases: []
     permission: "LSDtools.info"
-    permission-message: "no permission ;-;"
-  checkplayers:
-    description: Check player's ip
-    usage: /checkplayers
-    aliases: []
+    permission-message: "§7无权限 (LSDtools.info)"
+  checkplayer:
+    description: Check one's ip
+#    usage: /checkplayer <player>
+#    aliases: []
     permission: "LSDtools.check"
-    permission-message: "no permission ;-;"
+    permission-message: "§7无权限 (LSDtools.check)"
+  checkplayers:
+    description: Check all player's ip
+#    usage: /checkplayers
+#    aliases: []
+    permission: "LSDtools.check"
+    permission-message: "§7无权限 (LSDtools.check)"
