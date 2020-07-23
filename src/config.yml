@@ -1,5 +1,10 @@
 #LSDtools config
-#Plugin version : 0.1
+#Plugin version : 0.2
 
-#是否检测ip
-checkIP: true
+#请勿乱动
+version: 0.2
+
+#玩家加入时向控制台发送消息 (默认:true)
+joinInfoConsole: true
+#玩家加入时向OP或用有权限"LSDtools.check"的人发送消息 (默认:true)
+joinInfoOP: true

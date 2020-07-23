@@ -1,6 +1,7 @@
 package LSDtools.commands;
 
 import LSDtools.LSDtools;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -21,7 +22,8 @@ public class checkplayer implements CommandExecutor {
             //查询某一玩家
             if (sender.getServer().getPlayer(args[0]) != null) {
                 //若第一个参数中玩家存在，则发送信息
-                    sender.sendMessage(LSDtools.pname + sender.getServer().getPlayer(args[0]).getName() + " §r§l| §b" + sender.getServer().getPlayer(args[0]).getAddress() + " §r§l| " + "§b首次加入: §e" + !sender.getServer().getPlayer(args[0]).hasPlayedBefore());
+                Bukkit.getPlayer(args[0]);
+                sender.sendMessage(LSDtools.pname + sender.getServer().getPlayer(args[0]).getName() + " §r§l| §b" + sender.getServer().getPlayer(args[0]).getAddress() + " §r§l| " + "§b首次加入: §e" + !sender.getServer().getPlayer(args[0]).hasPlayedBefore());
                 return true;
                 } else {
                 //否则提示没有此玩家

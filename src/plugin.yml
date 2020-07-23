@@ -5,19 +5,24 @@ author: LSDog
 commands:
   LSDtools:
     description: Info of LSDtools
-#    usage: /LSDtools
-#    aliases: []
     permission: "LSDtools.info"
     permission-message: "§7无权限 (LSDtools.info)"
+
+  LSDtools reload:
+    description: Info of LSDtools
+    permission: "LSDtools.reload"
+    permission-message: "§7无权限 (LSDtools.reload)"
+
   checkplayer:
     description: Check one's ip
-#    usage: /checkplayer <player>
-#    aliases: []
     permission: "LSDtools.check"
     permission-message: "§7无权限 (LSDtools.check)"
+
   checkplayers:
     description: Check all player's ip
-#    usage: /checkplayers
-#    aliases: []
     permission: "LSDtools.check"
-    permission-message: "§7无权限 (LSDtools.check)"
+
+  gettools:
+    description: gettools
+    permission: "LSDtools.tools"
+    permission-message: "§7无权限 (LSDtools.tools)"
