@@ -2,12 +2,17 @@ package LSDtools.commands;
 
 import LSDtools.LSDtools;
 import LSDtools.world.tools.tpTool;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
+import org.bukkit.Bukkit;
+import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 
-public class gettools implements CommandExecutor {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class gettools implements TabExecutor {
     private final tpTool tpTool = new tpTool();
 
     @Override
@@ -48,4 +53,19 @@ public class gettools implements CommandExecutor {
             return true;
         }
     }
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+
+        //如果不是能够补全的长度，则返回空列表
+        if (args.length > 2) return new ArrayList<>();
+
+        //如果此时仅输入了命令，则直接返回所有的子命令
+        if (args.length == 0) return Arrays.asList(sub1);
+        if (args.length == 1) return Collections.singletonList(Arrays.toString(Bukkit.getOnlinePlayers().toArray()));
+
+        //筛选所有可能的补全列表，并返回
+        return Arrays.stream(sub1).filter(s -> s.startsWith(args[0])).collect(Collectors.toList());
+    }
+    private final String[] sub1 = {"1"}; //子命令
 }

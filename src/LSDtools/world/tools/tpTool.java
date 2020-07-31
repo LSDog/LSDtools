@@ -1,6 +1,8 @@
 package LSDtools.world.tools;
 
 import LSDtools.LSDtools;
+import net.minecraft.server.v1_8_R3.BlockAir;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -29,26 +31,29 @@ public class tpTool implements Listener {
         Player p = e.getPlayer();
         if (e.getItem() != null) {
             if (p.getItemInHand().getItemMeta().hasLore() && p.getItemInHand().getItemMeta().getLore().contains("§e§l点击传送")) {
-                int x = p.getTargetBlock((Set<Material>) null, 1024).getX();
+                if (p.getTargetBlock((Set<Material>) null, 1024).isLiquid()) { return; }
+                if (p.getTargetBlock((Set<Material>) null, 1024).isEmpty()) { return; }
+                int x = p.getTargetBlock((Set<Material>) null, 1024).getX(); //得到目标方块的XYZ
                 int z = p.getTargetBlock((Set<Material>) null, 1024).getZ();
                 int y = p.getTargetBlock((Set<Material>) null, 1024).getY();
                 int free = 0;
-                while (y <= p.getWorld().getMaxHeight()) {
+                while (y <= p.getWorld().getMaxHeight()) { //开始检测 - 从目标方块起向上找两格空间的位置并传送
                     if (p.getWorld().getBlockAt(x, y, z).getState().getType().equals((Material.AIR))) {
-                        ++free;
+                        ++free; //如果是空气就将free值加一
                     } else {
-                        free = 0;
+                        free = 0; //不然就设置成0
                     }
-                    if (free == 2) {
+                    if (free == 2) { //如果free值为2（有两格空间）
                         if (y < 0) {
-                            y = 1;
+                            y = 1; //当y小于0时设置成1（防止伤害/虚空回传）
                         }
                         Location loc = new Location(p.getWorld(), x + 0.5, y - 2 + 1, z + 0.5, p.getLocation().getYaw(), p.getPlayer().getLocation().getPitch());
-                        p.teleport(loc); //传送
-                        e.setCancelled(true);
+                        p.teleport(loc);
+                        //确定位置并传送
+                        e.setCancelled(true); //取消造成的一切额外事件
                         return;
                     }
-                    ++y;
+                    ++y; //如果全部不成立则再往上一格一格找
                 }
             }
         }

@@ -18,11 +18,12 @@ commands:
     permission: "LSDtools.check"
     permission-message: "§7无权限 (LSDtools.check)"
 
-  checkplayers:
-    description: Check all player's ip
-    permission: "LSDtools.check"
-
   gettools:
     description: gettools
     permission: "LSDtools.tools"
     permission-message: "§7无权限 (LSDtools.tools)"
+
+  lore:
+    description: about lore
+    permission: "LSDtools.lore"
+    permission-message: "§7无权限 (LSDtools.lore)"
