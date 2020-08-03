@@ -17,6 +17,7 @@ public class info implements CommandExecutor {
             sender.sendMessage("§r>> §e§lLSDtools §a§lv " + LSDtools.pversion + " §r<<");
             sender.sendMessage("§a/LSDtools: §r插件信息");
             sender.sendMessage("§a/lore: §r修改物品信息");
+            sender.sendMessage("§a/signedit: §r修改告示牌");
             sender.sendMessage("§a/gettools: §r获取一些小工具");
             sender.sendMessage("§a/checkplayer: §r检查某玩家信息");
             sender.sendMessage("§a/LSDtools reload: §r重载插件");

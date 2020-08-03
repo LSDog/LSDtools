@@ -60,7 +60,7 @@ public class lore implements CommandExecutor {
                 try {
                     action = Action.valueOf(args[0].toUpperCase());
                 } catch (IllegalArgumentException var20) {
-                    sender.sendMessage("错误 lore.java(60)");
+                    help(sender);
                     return true;
                 }
 
@@ -84,7 +84,7 @@ public class lore implements CommandExecutor {
                 switch(action) {
                     case NAME:
                         if (!sender.hasPermission("lores.name") || args.length < 2) {
-                            sender.sendMessage("错误 lore.java(84)");
+                            help(sender);
                             return true;
                         }
 
@@ -109,7 +109,7 @@ public class lore implements CommandExecutor {
                         break;
                     case OWNER:
                         if (!sender.hasPermission("lores.owner") || args.length < 2) {
-                            sender.sendMessage("错误 lore.java(109)");
+                            help(sender);
                             return true;
                         }
 
@@ -122,7 +122,7 @@ public class lore implements CommandExecutor {
                         break;
                     case ADD:
                         if (!sender.hasPermission("lores.lore") || args.length < 2) {
-                            sender.sendMessage("错误 lore.java(123)");
+                            help(sender);
                             return true;
                         }
 
@@ -130,7 +130,7 @@ public class lore implements CommandExecutor {
                         break;
                     case DELETE:
                         if (!sender.hasPermission("lores.lore")) {
-                            sender.sendMessage("错误 lore.java(131)");
+                            help(sender);
                             return true;
                         }
 
@@ -162,7 +162,7 @@ public class lore implements CommandExecutor {
                         }
                     case SET:
                         if (!sender.hasPermission("lores.lore") || args.length < 3) {
-                            sender.sendMessage("错误 lore.java(163)");
+                            help(sender);
                             return true;
                         }
 
@@ -181,7 +181,7 @@ public class lore implements CommandExecutor {
                         break;
                     case INSERT:
                         if (!sender.hasPermission("lores.lore") || args.length < 3) {
-                            sender.sendMessage("错误 lore.java(182)");
+                            help(sender);
                             return true;
                         }
 
@@ -205,7 +205,7 @@ public class lore implements CommandExecutor {
                             break;
                         }
 
-                        sender.sendMessage("错误 lore.java(206)");
+                        help(sender);
                         return true;
                     case UNDO:
                         if (args.length != 1) {

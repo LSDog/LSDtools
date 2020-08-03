@@ -5,6 +5,7 @@ import LSDtools.commands.gettools;
 import LSDtools.commands.info;
 import LSDtools.commands.lore;
 import LSDtools.player.checkIP;
+import LSDtools.world.signedit;
 import LSDtools.world.tools.tpTool;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -14,6 +15,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 public final class LSDtools extends JavaPlugin {
+    //主类 extends JavaPlugin
 
     //设置插件前缀
     public static final String pname = "§e§lLSDtools §7>> §b";
@@ -49,6 +51,7 @@ public final class LSDtools extends JavaPlugin {
         getCommand("checkplayer").setExecutor(new checkplayer());
         getCommand("gettools").setExecutor(new gettools());
         getCommand("lore").setExecutor(new lore());
+        getCommand("signedit").setExecutor(new signedit());
         //注册事件
         Bukkit.getPluginManager().registerEvents(new checkIP(),this);
         Bukkit.getPluginManager().registerEvents(new tpTool(), this);

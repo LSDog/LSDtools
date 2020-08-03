@@ -1,8 +1,5 @@
 package LSDtools.world.tools;
 
-import LSDtools.LSDtools;
-import net.minecraft.server.v1_8_R3.BlockAir;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

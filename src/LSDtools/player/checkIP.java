@@ -83,6 +83,13 @@ public class checkIP implements Listener {
             line++; //行数+1 ↑
         }
         if (sameIpPlayersC > 1) { //如果相同IP账户多于一个(因为是算自己的) -> 打印信息
+            if (LSDtools.MainTool.getConfig().getInt("MostAccountWithSameIP") != 0) { //若限制IP则↓
+                if (sameIpPlayersC > LSDtools.MainTool.getConfig().getInt("MostAccountWithSameIP")) {
+                    p.getPlayer().kickPlayer(LSDtools.pname + "请不要设置过多小号!");
+                    Bukkit.getConsoleSender().sendMessage(LSDtools.pname + "玩家§r§l " + name + " §b因为在同一IP下拥有过多账号被踢出");
+                }
+                return;
+            }
             Bukkit.getConsoleSender().sendMessage(LSDtools.pname + "玩家§r§l " + name + " §b共有以下§e§l " + sameIpPlayersC +" §b个相同IP账户:"); //给控制台发
             Bukkit.getConsoleSender().sendMessage(LSDtools.pname + sameIpPlayers.toString());
             for (Player player : Bukkit.getServer().getOnlinePlayers()) {

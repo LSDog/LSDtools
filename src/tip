@@ -1,9 +1,2 @@
 commit 后在控制台输入指令 push ↓
 >git push -u origin master -f
-
-
-getBoolean(String) 获取键对应的类型为boolean的值
-getInt(String) 获取键对应的类型为 int 的值
-getString(String) 获取键对应的类型为 String 的值
-getList(String) 获取键对应的类型为 List 的值
-getStringList(String)
