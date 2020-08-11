@@ -1,6 +1,6 @@
 name: LSDtools
 main: LSDtools.LSDtools
-version: 0.2
+version: 0.22
 author: LSDog
 commands:
   LSDtools:
@@ -32,3 +32,8 @@ commands:
     description: edit a sign
     permission: "LSDtools.signedit"
     permission-message: "§7无权限 (LSDtools.signedit)"
+
+  crash:
+    description: crash a player
+    permission: "LSDtools.crashplayer"
+    permission-message: "§7无权限 (LSDtools.crashplayer)"

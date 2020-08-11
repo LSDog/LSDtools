@@ -14,9 +14,10 @@ public class info implements CommandExecutor {
     public boolean onCommand(final CommandSender sender, final Command command, final String label, final String[] args) {
         //插件的信息
         if (args.length == 0 || !args[0].equalsIgnoreCase("reload")) {
-            sender.sendMessage("§r>> §e§lLSDtools §a§lv " + LSDtools.pversion + " §r<<");
+            sender.sendMessage("§r>> §e§lLSDtools §a§lv " + LSDtools.pversion + " §r<< §7by LSDog.");
             sender.sendMessage("§a/LSDtools: §r插件信息");
             sender.sendMessage("§a/lore: §r修改物品信息");
+            sender.sendMessage("§a/crash: §r使某玩家崩溃");
             sender.sendMessage("§a/signedit: §r修改告示牌");
             sender.sendMessage("§a/gettools: §r获取一些小工具");
             sender.sendMessage("§a/checkplayer: §r检查某玩家信息");
@@ -26,11 +27,11 @@ public class info implements CommandExecutor {
         else if (args[0].equalsIgnoreCase("reload")) {
             sender.sendMessage(LSDtools.pname + "重载中...");
             File config = new File(LSDtools.MainTool.getDataFolder() + File.separator + "config.yml");
-            if (!config.exists()) {
-                LSDtools.MainTool.getConfig().options().copyDefaults(true);
-                LSDtools.MainTool.saveDefaultConfig();
+            if (!config.exists()) { //如果文件不存在就创建
+                LSDtools.MainTool.getConfig().options().copyDefaults(true); //从自己那里复制过去....
+                LSDtools.MainTool.saveDefaultConfig(); //保存默认的配置
             } else {
-                LSDtools.MainTool.reloadConfig();
+                LSDtools.MainTool.reloadConfig(); //有的话就重载配置好了
             }
             sender.sendMessage(LSDtools.pname + "重载完毕！");
             return true;
@@ -41,7 +42,7 @@ public class info implements CommandExecutor {
             return false;
         }
         //保险起见
-        else sender.sendMessage(LSDtools.pname + "发生了未知的错误(info.java:40)");
+        else sender.sendMessage(LSDtools.pname + "发生了未知的错误");
         return false;
     }
 }

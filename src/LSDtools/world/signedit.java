@@ -24,17 +24,15 @@ public class signedit implements CommandExecutor{
             return true;
         }
 
-        if (args.length > 2) {
-            sender.sendMessage(LSDtools.pname + "参数过多 - §r/signedit <line> <text>");
-            return true;
-        } else if (args.length == 0 || args.length == 1 || args[0].isEmpty()) {
+        if (args.length == 0 || args[0].isEmpty()) {
             sender.sendMessage(LSDtools.pname + "修改告示牌 - §r/signedit <line> <text>");
+            sender.sendMessage(LSDtools.pname + "修改告示牌 - §r另外: 原句用%d%代替 ,空格用%s%代替");
             return true;
         } else if (!isNumeric(args[0])) {
             sender.sendMessage(LSDtools.pname + "§c错误: 这不是一个合法的数");
             return true;
         } else if (Integer.parseInt(args[0]) > 3) {
-            sender.sendMessage(LSDtools.pname + "§c错误: 行数必须介于 0~3 之间 (从 0 开始计数)");
+            sender.sendMessage(LSDtools.pname + "§c错误: 行数必须介于 0~3 之间 (从 0 开始)");
             return true;
         } else if (args[1].isEmpty()) {
             sender.sendMessage(LSDtools.pname + "§c错误: 请输入内容");
@@ -46,11 +44,14 @@ public class signedit implements CommandExecutor{
                 || targetBlock.getState().getType() == Material.WALL_SIGN
                 || targetBlock.getState().getType() == Material.SIGN_POST
         ) {
-            String txt = args[1].replace("&","§");
             org.bukkit.block.Sign sign = (org.bukkit.block.Sign) targetBlock.getState();
+            String txt = args[1]
+                    .replace("&","§")
+                    .replace("%s%"," ")
+                    .replace("%d%",sign.getLine(Integer.parseInt(args[0])));
             sign.setLine(Integer.parseInt(args[0]), txt);
             sign.update();
-            sender.sendMessage(LSDtools.pname + "告示牌已修改为:§r" + args[1].replace("&","§") + " §r(" + args[0] + ")");
+            sender.sendMessage(LSDtools.pname + "告示牌已修改为:§r " + txt + " §r(" + args[0] + ")");
         } else {
             sender.sendMessage(LSDtools.pname + "§c请看向告示牌! (10格以内)");
         }
