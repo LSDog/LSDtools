@@ -1,6 +1,6 @@
 name: LSDtools
 main: LSDtools.LSDtools
-version: 0.22
+version: 0.35
 author: LSDog
 commands:
   LSDtools:

@@ -1,6 +1,0 @@
-commit 后在控制台输入指令 push ↓
->git push -u origin master -f
-
-
-随机数:
-(数据类型)(最小值+Math.random()*(最大值-最小值+1))

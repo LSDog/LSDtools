@@ -17,7 +17,7 @@ public final class LSDtools extends JavaPlugin {
     //设置插件前缀
     public static final String pname = "§e§lLSDtools §7>> §b";
     //设置插件版本
-    public static final double pversion = 0.22;
+    public static final double pversion = 0.35;
     //将插件主类储存起来以供其他类访问
     public static LSDtools MainTool;
     public LSDtools() {
@@ -30,16 +30,12 @@ public final class LSDtools extends JavaPlugin {
         //生成配置
         File config = new File(getDataFolder() + File.separator + "config.yml");
         File data = new File(getDataFolder() + File.separator + "data.yml");
-        File AIMessage = new File(getDataFolder() + File.separator + "AIMessage.yml");
         if (!config.exists()){
             getConfig().options().copyDefaults(true);
             saveDefaultConfig();
         }
         if(!data.exists()){
             saveResource("data.yml", true);
-        }
-        if(!AIMessage.exists()){
-            saveResource("AIMessage.yml", true);
         }
         //注册命令
         getCommand("LSDtools").setExecutor(new info());
