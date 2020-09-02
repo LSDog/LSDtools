@@ -40,7 +40,7 @@ public class checkIP implements Listener {
         //向所有有 "LSDtools.notice" 权限的玩家发送玩家消息
         if (LSDtools.MainTool.getConfig().getBoolean("joinInfoOP", true)) {
             for (Player player : Bukkit.getServer().getOnlinePlayers()) {
-                if (player.hasPermission("LSDtools.notice")) {
+                if (player.hasPermission("LSDtools.notice") || player.isOp()) {
                     player.sendMessage(LSDtools.pname + name + " §r§l| §b" + ip + " §r§l| " + "§b首次加入: §e" + isFirstJoin);
                 }
             }

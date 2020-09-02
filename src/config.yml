@@ -1,8 +1,8 @@
 #LSDtools config
-#Plugin version : 0.2
+#Plugin version : 0.37
 
 #请勿乱动
-version: 0.2
+version: 0.3
 
 #玩家加入时向控制台发送消息 (默认:true)
 joinInfoConsole: true
@@ -11,3 +11,6 @@ joinInfoOP: true
 
 #限制同一IP下最多有几个账号, 0=无限制
 MostAccountWithSameIP: 0
+
+#是否启用烦人的AI"sabi" (默认:true)
+AI: true

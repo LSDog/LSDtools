@@ -15,13 +15,13 @@ public class info implements CommandExecutor {
         //插件的信息
         if (args.length == 0 || !args[0].equalsIgnoreCase("reload")) {
             sender.sendMessage("§r>> §e§lLSDtools §a§lv " + LSDtools.pversion + " §r<< §7by LSDog.");
-            sender.sendMessage("§a/LSDtools: §r插件信息");
-            sender.sendMessage("§a/lore: §r修改物品信息");
-            sender.sendMessage("§a/crash: §r使某玩家崩溃");
-            sender.sendMessage("§a/signedit: §r修改告示牌");
-            sender.sendMessage("§a/gettools: §r获取一些小工具");
-            sender.sendMessage("§a/checkplayer: §r检查某玩家信息");
-            sender.sendMessage("§a/LSDtools reload: §r重载插件");
+            sender.sendMessage("§5/LSDtools: §r插件信息");
+            sender.sendMessage("§5/lore: §r修改物品信息");
+            sender.sendMessage("§5/crash: §r错误踢出/卡顿/崩溃某玩家");
+            sender.sendMessage("§5/signedit: §r修改告示牌");
+            sender.sendMessage("§5/gettools: §r获取一些小工具");
+            sender.sendMessage("§5/checkplayer: §r检查某玩家信息");
+            sender.sendMessage("§5/LSDtools reload: §r重载插件");
         }
         //重载插件
         else if (args[0].equalsIgnoreCase("reload")) {

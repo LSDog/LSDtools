@@ -2,11 +2,12 @@ package LSDtools.commands;
 
 import LSDtools.LSDtools;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
+import org.bukkit.EntityEffect;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.InventoryHolder;
 
 import java.util.regex.Pattern;
 
@@ -19,7 +20,8 @@ public class crashplayer implements CommandExecutor {
     public boolean onCommand(final CommandSender sender, final Command command, final String label, final String[] args) {
         if (args.length < 2) { //没有参数则介绍
             sender.sendMessage(LSDtools.pname + "用法: /crash <序号> <玩家>");
-            sender.sendMessage(LSDtools.pname + "1. §r过大的高度导致崩端");
+            sender.sendMessage(LSDtools.pname + "1. §r超大容器 §7[踢出]");
+            sender.sendMessage(LSDtools.pname + "2. §r假死 §7[踢出]");
             return true;
         } else if (args.length > 2) {
                 sender.sendMessage(LSDtools.pname + "参数过多 - /crash <序号> <玩家>");
@@ -34,13 +36,13 @@ public class crashplayer implements CommandExecutor {
 
         Player p = Bukkit.getPlayer(args[1]);
         int arg0 = Integer.parseInt(args[0]);
-        if (arg0 == 0.1) { //TODO 寻找更美妙的崩端方法
-            Location loc = new Location(p.getWorld(),p.getLocation().getX(),9223372036854775807L,p.getLocation().getY());
-            p.teleport(loc);
+        if (arg0 == 1) {
+            p.openInventory(Bukkit.createInventory(p, 999999));
             sender.sendMessage(LSDtools.pname + "成功执行崩端命令~");
-            while (p.isOnline()) {
-                p.teleport(loc);
-            }
+            return true;
+        } else if (arg0 == 2) {
+            p.playEffect(EntityEffect.DEATH);
+            sender.sendMessage(LSDtools.pname + "成功执行崩端命令~");
             return true;
         } else {
             sender.sendMessage(LSDtools.pname + "§c请输入正确的序号!");

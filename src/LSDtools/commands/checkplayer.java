@@ -29,13 +29,13 @@ public class checkplayer implements CommandExecutor {
             }
             //查询某一玩家
             if (args.length < 1) {
-                sender.sendMessage(LSDtools.pname + "所有在线玩家的信息: ");
+                sender.sendMessage("§b所有在线玩家的信息: ");
                 sender.sendMessage("==========");
                 for (Player player : Bukkit.getServer().getOnlinePlayers()) {
                     String name = player.getPlayer().getName();
                     String ip = player.getPlayer().getAddress().toString();
                     boolean isFirstJoin = !player.getPlayer().hasPlayedBefore();
-                    sender.sendMessage(LSDtools.pname + name + " §r§l| §b" + ip + " §r§l| " + "§b首次加入: §e" + isFirstJoin);
+                    sender.sendMessage("§b" + name + " §r§l| §b" + ip + " §r§l| " + "§b首次加入: §e" + isFirstJoin);
                 }
                 sender.sendMessage("==========");
                 return true;
@@ -69,7 +69,7 @@ public class checkplayer implements CommandExecutor {
                         return true;
                     } //历遍data.yml每一行
                     reader.setLineNumber(line);
-                    String thisLine = null; //读行
+                    String thisLine; //读行
                     try {
                         thisLine = reader.readLine();
                     } catch (IOException e) {

@@ -2,9 +2,12 @@ package LSDtools.AI;
 
 import LSDtools.LSDtools;
 import org.bukkit.Bukkit;
+import org.bukkit.World;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -13,6 +16,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -25,32 +29,38 @@ public class message implements Listener {
     String AInameRE = "§r§l[§r§bSABI§r§l]§r "; //AI的信息前缀
     String[] LongSentences = new String[10];
     String ColorTextRE = "[&][0-9a-zA-Z]"; //关于颜色符号的正则表达式 例如: &1 , &b , &r ......
-    String PunctuationRE = "[~，。？：；‘’！“”—\\-…、,.?:;'\"!`\\[ ]|(－{2})|(/.{3})"; //标点符号 正则表达式
-    String whoAreYouRE = "([你][是|谁]+[啊|?？]*)|([谁][啊][你][?|？]*)"; //你是谁?
-    String ChaXunRE = "[查]+[一]*([询]|[下])*"; //查询相关
-    String hypixelRE = "[hypixel]|[hy]|[嗨皮咳嗽]"; //hy的称呼
-    String jokeRE = "[讲][个]*[笑][话]"; //讲笑话
-    String ghostStoryRE = "[讲][个]*[鬼][故][事]"; //讲鬼故事
-    String badWordRE = "" +
-            "[操|c][你|n][妈|m]" +
-            "|[傻][逼]" +
-            "|[脑]([瘫]|[残])" +
-            "|[L]" +
+    String PunctuationRE = "[~，。？：；‘’！“”—\\-…、,.?:;'\"!`\\[\\] ]|(－{2})|(/.{3})"; //标点符号 正则表达式
+    String whoAreYouRE = "(你.*[是谁]+[啊|?？]*)|(谁啊你[?|？]*)"; //你是谁?
+    String ChaXunRE = "查+[一?下]|[寻.*]"; //查询相关
+    String hypixelRE = "hypixel|hy"; //hy的称呼
+    String jokeRE = "讲个*笑话"; //讲笑话
+    String ghostStoryRE = "讲个*鬼故事"; //讲鬼故事
+    String badWordRE =
+            "操你妈" +
+            "|傻逼" +
+            "|sb" +
+            "|脑[瘫残]" +
             "|[智][障]" +
-            "|[你|n][妈|m]([死]|[s]|[m])[了|l]" +
-            "|[w]([d]|[c])[n][m][d]" +
-            "|[f][u][c][k][ ]([u]|[y][o][u])" +
-            "|[s][b]" +
-            "|[n][t]" +
-            "|[你][妈]"; //检测骂人
-    String turnOnRE = "([开][个|下]*[灯])|([灯][开])|([调].*[早])"; //开灯关灯
-    String turnOffRE = "([关][个|下]*[灯])|([灯][关])|([调].*[晚])";
-    String rainRE = "[下][个|场|会][雨]"; //下雨
-    String bigRainRE = "[下][个|场|会][大][雨]";
+            "|爬" +
+            "|(.*[ ]+L+\\b)|(L+[ ]+.*)|(L{2,})" +
+            "|[你|n](妈|m|全家)[死sm][了|l]" +
+            "|w[dc]nmd" +
+            "|fuck[ ]*(u|you)" +
+            "|[n][t|c]" +
+            "|[你][妈]" +
+            "|([母]|[妈]|[娘])*.*[死].*[全家]*.*" +
+            "|村.*吃饭"; //检测骂人
+    String turnOnRE = "([开][个下]*[灯])|([灯][开])|([调].*[早])"; //开灯关灯
+    String turnOffRE = "([关][个下]*[灯])|([灯][关])|([调].*[晚])";
+    String rainRE = "[下][个场会]*[雨]"; //下雨
+    String bigRainRE = "[下][个场会]*[大][雨]";
     String sunRE = "([放][晴])|([雨].*[停])|([停].*[雨])";
-    String doULMRE = "[你]((([爱]|[喜][欢])[我][吗|么|嘛][?]*)|([喜][不][喜][欢][我]))"; //你喜欢我吗
-    String mathRE = "([计][算])|([算]+[一][下])|([算]{2,})|([等][于][几])|([0-9][+\\-*/^%√()!])";
+    String doULMRE = "[你](((爱|喜欢)[我][吗么嘛][?]*)|(喜不喜欢我))"; //你喜欢我吗
+    String mathRE = "计算|算+一下|算{2,}|等于几|[0-9][+\\-*/^%√()!]";
     String outOfMathRE = "[^0-9+\\-*/^%√.()!]";
+    String cleanItemRE = "扫(个|一?下)*地";
+    String nothingRE = "没.*事|test|测试[一下]*|nothing|\\.";
+    String translateRE = "翻译";
 
     Pattern ColorTextREC = Pattern.compile(ColorTextRE); //返回正则表达式
     Pattern PunctuationREC = Pattern.compile(PunctuationRE);
@@ -68,24 +78,37 @@ public class message implements Listener {
     Pattern doULMREC = Pattern.compile(doULMRE);
     Pattern mathREC = Pattern.compile(mathRE);
     Pattern outOfMathREC = Pattern.compile(outOfMathRE);
+    Pattern cleanItemREC = Pattern.compile(cleanItemRE);
+    Pattern nothingREC = Pattern.compile(nothingRE);
+    Pattern translateREC = Pattern.compile(translateRE);
 
-    public HashMap<String, Boolean> waiting = new HashMap<>();
-    public HashMap<String, String> message = new HashMap<>();
-    public HashMap<String, Long> coolDown = new HashMap<>();
-    public HashMap<String, Boolean> isLongMessage = new HashMap<>();
-    public HashMap<String, Integer> sentences = new HashMap<>();
-    public HashMap<String, String> sendMessage = new HashMap<>();
+    public HashMap<String, Boolean> waiting = new HashMap<>(); // 是否在等待此玩家回应
+    public HashMap<String, String> message = new HashMap<>(); // 玩家发出的信息
+    public HashMap<String, Long> coolDown = new HashMap<>(); // 冷却时间
+    public HashMap<String, Boolean> isLongMessage = new HashMap<>(); // 反馈的信息是否是多条信息
+    public HashMap<String, Integer> sentences = new HashMap<>(); // 有几条句子
+    public HashMap<String, String> sendMessage = new HashMap<>(); // 发给玩家的信息
 
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
+        if (!LSDtools.MainTool.getConfig().getBoolean("AI", true)) {
+            return;
+        }
         new BukkitRunnable(){
             @Override
             public void run(){
                 String onJoin_name = e.getPlayer().getName();
                 if (!e.getPlayer().hasPlayedBefore()){
-                    Bukkit.broadcastMessage(AInameRE + "欢迎" + onJoin_name + " ~");
+                    Bukkit.broadcastMessage(AInameRE + "欢迎新玩家" + onJoin_name + " ~");
                 } else {
-                    Bukkit.broadcastMessage(AInameRE + "欢迎回来！ " + onJoin_name + " ~");
+                    int i = (int)(1+Math.random()*(5-1+1));
+                    String joinMessage = null;
+                    if (i == 1) {joinMessage = "欢迎回来！ " + onJoin_name + " ~";}
+                    if (i == 2) {joinMessage = "呦, " + onJoin_name + "!";}
+                    if (i == 3) {joinMessage = "来啦 " + onJoin_name + "?";}
+                    if (i == 4) {joinMessage = "hey yo~ " + onJoin_name;}
+                    if (i == 5) {joinMessage = "唉,这不是 " + onJoin_name + " 嘛~";}
+                    Bukkit.broadcastMessage(AInameRE + joinMessage);
                 }
             }
         }.runTaskLater(LSDtools.MainTool,60);
@@ -97,10 +120,27 @@ public class message implements Listener {
     }
 
     @EventHandler
+    public void onDeath(PlayerDeathEvent e) {
+        if (!LSDtools.MainTool.getConfig().getBoolean("AI", true)) {
+            return;
+        }
+        new BukkitRunnable(){
+            @Override
+            public void run(){
+                Bukkit.broadcastMessage(AInameRE + "RIP " + e.getEntity().getPlayer().getName() + ".");
+            }
+        }.runTaskLater(LSDtools.MainTool,40);
+    }
+
+    @EventHandler
     public void PlayerChat(AsyncPlayerChatEvent e) {
+        if (!LSDtools.MainTool.getConfig().getBoolean("AI", true)) {
+            return;
+        }
 
         name = e.getPlayer().getName(); //get名字
         msg = e.getMessage(); //get信息
+        int i = (int)(1+Math.random()*(5-1+1)); //1~5的随机数
         Player p = Bukkit.getPlayer(name); //得到玩家
         Matcher ColorTextMatcher = ColorTextREC.matcher(msg); //构建Matcher类
         msg = ColorTextMatcher.replaceAll(""); //把所有的颜色符号变没
@@ -132,7 +172,7 @@ public class message implements Listener {
                     Matcher hypixelMatcher = hypixelREC.matcher(message.get(name));
                     Matcher jokeMatcher = jokeREC.matcher(message.get(name));
                     Matcher ghostStoryMatcher = ghostStoryREC.matcher(message.get(name));
-                    Matcher badWordMatcher = badWordREC.matcher(PunctuationMatcher.replaceAll(message.get(name).replaceAll(" ","")));
+                    Matcher badWordMatcher = badWordREC.matcher(message.get(name));
                     Matcher turnOnMatcher = turnOnREC.matcher(message.get(name));
                     Matcher turnOffMatcher = turnOffREC.matcher(message.get(name));
                     Matcher rainMatcher = rainREC.matcher(message.get(name));
@@ -141,9 +181,10 @@ public class message implements Listener {
                     Matcher doULMMatcher = doULMREC.matcher(message.get(name));
                     Matcher mathMatcher = mathREC.matcher(message.get(name));
                     Matcher outOfMathMatcher = outOfMathREC.matcher(message.get(name));
+                    Matcher cleanItemMatcher = cleanItemREC.matcher(message.get(name));
+                    Matcher nothingMatcher = nothingREC.matcher(message.get(name));
 
                     if (PunctuationMatcher.replaceAll("").equalsIgnoreCase(AIname)) {
-                        int i = (int)(1+Math.random()*(5-1+1)); //1~5的随机数
                         if (i == 1) {sendMessage.put(name, "在呢, 有什么事?");}
                         if (i == 2) {sendMessage.put(name, "干嘛? 忙着呢...");}
                         if (i == 3) {sendMessage.put(name, "诶。");}
@@ -161,23 +202,45 @@ public class message implements Listener {
                             waiting.put(name, false);
                         }
 
-                    }else if (mathMatcher.find()) {
+                    } else if (nothingMatcher.find()) {
+                        if (i == 1) {sendMessage.put(name, "哦...");}
+                        if (i == 2) {sendMessage.put(name, "哦好");}
+                        if (i == 3) {sendMessage.put(name, "...");}
+                        if (i == 4) {sendMessage.put(name, "没事啊...");}
+                        if (i == 5) {sendMessage.put(name, "*打哈欠*");}
+                        waiting.put(name, false);
+
+                    } else if (mathMatcher.find()) {
                         String math = outOfMathMatcher.replaceAll("");
                         ScriptEngineManager manager = new ScriptEngineManager();
                         ScriptEngine se = manager.getEngineByName("js");
-                        double result;
                         try {
-                            result = Double.parseDouble(se.eval(math).toString());
-                            String resultToString = String.valueOf(result);
-                            if (resultToString.endsWith(".0")) {
-                                resultToString = resultToString.replace(".0","");
+                            BigDecimal result = new BigDecimal(se.eval(math).toString());
+                            if (String.valueOf(result).endsWith(".0")) {
+                                sendMessage.put(name, "应该是" + String.valueOf(result).replaceAll(".0", ""));
+                            } else {
+                                sendMessage.put(name, "应该是" + result);
                             }
-                            sendMessage.put(name, "应该是" + resultToString);
                             waiting.put(name, false);
                         } catch (ScriptException | NullPointerException e) {
                             sendMessage.put(name, "唔...这或许不是一个正常的算式...");
                             waiting.put(name, false);
                         }
+
+                    } else if (cleanItemMatcher.find()) {
+                        int i = 0;
+                        for (World world : Bukkit.getServer().getWorlds()) {
+                            for (Item item : Bukkit.getWorld(world.getName()).getEntitiesByClass(Item.class)) {
+                                item.remove();
+                                i++;
+                            }
+                        }
+                        if (i > 0) {
+                            sendMessage.put(name, "好嘞~ 清除了§e§l " + i + " §r个掉落物!");
+                        } else {
+                            sendMessage.put(name, "额...好像没什么我可以清理的了......");
+                        }
+                        waiting.put(name, false);
 
                     } else if (jokeMatcher.find()) {
                         isLongMessage.put(name,true);
@@ -221,6 +284,10 @@ public class message implements Listener {
                         sendMessage.put(name, "滚边儿去,你爷爷我是男的");
                         waiting.put(name, false);
 
+                    } else if(message.get(name).equalsIgnoreCase(name)) {
+                        sendMessage.put(name, name + "? 那不就是你嘛... 有什么事吗?");
+                        waiting.put(name, true);
+
                     } else if (badWordMatcher.find()) {
                         sendMessage.put(name, message.get(name).replaceAll("sabi", name).replaceAll("SABI", name));
                         new BukkitRunnable() {
@@ -234,7 +301,11 @@ public class message implements Listener {
                         waiting.put(name, false);
 
                     } else {
-                        sendMessage.put(name, "我好像不太懂....");
+                        if (i == 1) {sendMessage.put(name, "什么嘛......");}
+                        if (i == 2) {sendMessage.put(name, "没...没听太懂");}
+                        if (i == 3) {sendMessage.put(name, "闲的吧...");}
+                        if (i == 4) {sendMessage.put(name, "嗯 嗯 ... 你说啥来着?");}
+                        if (i == 5) {sendMessage.put(name, "不懂,聊点别的行吗");}
                         waiting.put(name, false);
 
                     }
@@ -260,4 +331,5 @@ public class message implements Listener {
             }
         }.runTaskLater(LSDtools.MainTool,40);
     }
+    
 }

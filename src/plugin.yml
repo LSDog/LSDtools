@@ -1,17 +1,12 @@
 name: LSDtools
 main: LSDtools.LSDtools
-version: 0.35
+version: 0.37
 author: LSDog
 commands:
   LSDtools:
     description: Info of LSDtools
     permission: "LSDtools.info"
     permission-message: "§7无权限 (LSDtools.info)"
-
-  LSDtools reload:
-    description: Info of LSDtools
-    permission: "LSDtools.reload"
-    permission-message: "§7无权限 (LSDtools.reload)"
 
   checkplayer:
     description: Check one's ip

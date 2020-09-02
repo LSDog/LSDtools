@@ -13,14 +13,14 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-//此类部分源码取自 Lores 插件 https://dev.bukkit.org/projects/lores
+//此类部分源码部分取自 Lores 插件 https://dev.bukkit.org/projects/lores
+
 public class lore implements CommandExecutor {
-    private static HashMap<String, LinkedList<ItemStack>> undo = new HashMap();
-    char[] colorCodes = new char[]{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'l', 'n', 'o', 'k', 'm', 'r'};
+    private static final HashMap<String, LinkedList<ItemStack>> undo = new HashMap<>();
+
     public void help(CommandSender sender) {
         sender.sendMessage(LSDtools.pname + "物品数据修改用法:");
         sender.sendMessage(LSDtools.pname + "/lore name <name> - 修改名字");
@@ -69,8 +69,7 @@ public class lore implements CommandExecutor {
                     if (!undo.containsKey(id)) {
                         undo.put(id, new LinkedList());
                     }
-
-                    LinkedList<ItemStack> list = (LinkedList)undo.get(id);
+                    LinkedList<ItemStack> list = undo.get(id);
                     list.addFirst(item.clone());
 
                     while(list.size() > 5) {
@@ -92,17 +91,14 @@ public class lore implements CommandExecutor {
                         if (name.contains("|")) {
                             index = name.replaceAll("§[0-9a-klmnor]", "").length();
 
-                            for(Iterator itr = lore.iterator(); itr.hasNext(); index = Math.max(index, ((String)itr.next()).replaceAll("§[0-9a-klmnor]", "").length())) {
-                            }
-
                             int spaces = index - name.replaceAll("§[0-9a-klmnor]", "").length() - 1;
-                            String space = " ";
+                            StringBuilder space = new StringBuilder(" ");
 
                             for(stackSize = 1; (double)stackSize < (double)spaces * 1.5D; ++stackSize) {
-                                space = space + ' ';
+                                space.append(' ');
                             }
 
-                            name = name.replace("|", space);
+                            name = name.replace("|", space.toString());
                         }
 
                         meta.setDisplayName(name);
@@ -211,7 +207,7 @@ public class lore implements CommandExecutor {
                         if (args.length != 1) {
                             return false;
                         } else {
-                            LinkedList<ItemStack> list = (LinkedList)undo.get(id);
+                            LinkedList<ItemStack> list = undo.get(id);
                             if (list == null) {
                                 player.sendMessage("§4你还没有修改过此物品的数据呢!");
                                 return true;
@@ -219,7 +215,7 @@ public class lore implements CommandExecutor {
                                 player.sendMessage("§4无法继续撤回!");
                                 return true;
                             } else {
-                                ItemStack undoneItem = (ItemStack)list.removeFirst();
+                                ItemStack undoneItem = list.removeFirst();
                                 if (!item.isSimilar(undoneItem) && item.getType() != Material.SKULL_ITEM) {
                                     player.sendMessage("§4你还没有修改过此物品的数据呢!");
                                 } else {
