@@ -89,9 +89,10 @@ public class message implements Listener {
     public HashMap<String, Integer> sentences = new HashMap<>(); // 有几条句子
     public HashMap<String, String> sendMessage = new HashMap<>(); // 发给玩家的信息
 
+    // 加入游戏
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
-        if (!LSDtools.MainTool.getConfig().getBoolean("AI", true)) {
+        if (!LSDtools.MainTool.getConfig().getBoolean("AI", false)) {
             return;
         }
         new BukkitRunnable(){
@@ -114,14 +115,16 @@ public class message implements Listener {
         }.runTaskLater(LSDtools.MainTool,60);
     }
 
+    // 退出游戏
     @EventHandler
     public void onQuit(PlayerQuitEvent e) {
         waiting.put(e.getPlayer().getName(), false);
     }
 
+    // 死亡事件
     @EventHandler
     public void onDeath(PlayerDeathEvent e) {
-        if (!LSDtools.MainTool.getConfig().getBoolean("AI", true)) {
+        if (!LSDtools.MainTool.getConfig().getBoolean("AI", false)) {
             return;
         }
         new BukkitRunnable(){
@@ -132,9 +135,10 @@ public class message implements Listener {
         }.runTaskLater(LSDtools.MainTool,40);
     }
 
+    // 聊天
     @EventHandler
     public void PlayerChat(AsyncPlayerChatEvent e) {
-        if (!LSDtools.MainTool.getConfig().getBoolean("AI", true)) {
+        if (!LSDtools.MainTool.getConfig().getBoolean("AI", false)) {
             return;
         }
 
