@@ -80,7 +80,7 @@ public class message implements Listener {
     Pattern outOfMathREC = Pattern.compile(outOfMathRE);
     Pattern cleanItemREC = Pattern.compile(cleanItemRE);
     Pattern nothingREC = Pattern.compile(nothingRE);
-    Pattern translateREC = Pattern.compile(translateRE);
+    Pattern translateREC = Pattern.compile(translateRE); //TODO 翻译
 
     public HashMap<String, Boolean> waiting = new HashMap<>(); // 是否在等待此玩家回应
     public HashMap<String, String> message = new HashMap<>(); // 玩家发出的信息
@@ -150,7 +150,7 @@ public class message implements Listener {
         msg = ColorTextMatcher.replaceAll(""); //把所有的颜色符号变没
         message.put(name, msg); //把去掉颜色符号的句子放到Hashmap"message"的对应玩家里
 
-        coolDown.putIfAbsent(name, 0L);
+        coolDown.putIfAbsent(name, 0L); // 冷却
         Matcher PunctuationMatcher = PunctuationREC.matcher(message.get(name));
         if (PunctuationMatcher.replaceAll("").toUpperCase().contains(AIname)) {
             if (System.currentTimeMillis() < coolDown.get(name)) {

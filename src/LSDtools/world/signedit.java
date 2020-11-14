@@ -26,7 +26,7 @@ public class signedit implements CommandExecutor{
 
         if (args.length == 0 || args[0].isEmpty()) {
             sender.sendMessage(LSDtools.pname + "修改告示牌 - §r/signedit <line> <text>");
-            sender.sendMessage(LSDtools.pname + "修改告示牌 - §r另外: 原句用%d%代替 ,空格用%s%代替");
+            sender.sendMessage(LSDtools.pname + "修改告示牌 - §r原句 = %d ,空格 = %s ,&为颜色字符 ,& = %&");
             return true;
         } else if (!isNumeric(args[0])) {
             sender.sendMessage(LSDtools.pname + "§c错误: 这不是一个合法的数");
@@ -46,14 +46,15 @@ public class signedit implements CommandExecutor{
         ) {
             org.bukkit.block.Sign sign = (org.bukkit.block.Sign) targetBlock.getState();
             String txt = args[1]
+                    .replace("%&","&")
                     .replace("&","§")
-                    .replace("%s%"," ")
-                    .replace("%d%",sign.getLine(Integer.parseInt(args[0])));
+                    .replace("%s"," ")
+                    .replace("%d",sign.getLine(Integer.parseInt(args[0])));
             sign.setLine(Integer.parseInt(args[0]), txt);
             sign.update();
             sender.sendMessage(LSDtools.pname + "告示牌已修改为:§r " + txt + " §r(" + args[0] + ")");
         } else {
-            sender.sendMessage(LSDtools.pname + "§c请看向告示牌! (10格以内)");
+            sender.sendMessage(LSDtools.pname + "§c请对准告示牌! (10格以内)");
         }
 
         return true;
