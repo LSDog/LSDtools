@@ -33,6 +33,7 @@ public class tpv implements CommandExecutor {
                     player.hidePlayer(s);
                 }
             }
+            s.setAllowFlight(true);
             s.setFlying(true);
             s.teleport(loc);
             s.sendMessage(LSDtools.pname + "成功隐身传送至 " + p.getName() + " !");
