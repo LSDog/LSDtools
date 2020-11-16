@@ -1,6 +1,6 @@
 name: LSDtools
 main: LSDtools.LSDtools
-version: 0.37
+version: 0.39
 author: LSDog
 commands:
   LSDtools:
@@ -32,3 +32,8 @@ commands:
     description: crash a player
     permission: "LSDtools.crashplayer"
     permission-message: "§7无权限 (LSDtools.crashplayer)"
+
+  tpv:
+    description: tp to a player
+    permission: "LSDtools.tpv"
+    permission-message: "§7无权限 (LSDtools.tpv)"

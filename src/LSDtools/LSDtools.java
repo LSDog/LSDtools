@@ -17,7 +17,7 @@ public final class LSDtools extends JavaPlugin {
     //设置插件前缀
     public static final String pname = "§e§lLSDtools §7>> §b";
     //设置插件版本
-    public static final double pversion = 0.38;
+    public static final double pversion = 0.39;
     //将插件主类储存起来以供其他类访问
     public static LSDtools MainTool;
 
@@ -45,6 +45,7 @@ public final class LSDtools extends JavaPlugin {
         getCommand("lore").setExecutor(new lore());
         getCommand("signedit").setExecutor(new signedit());
         getCommand("crash").setExecutor(new crashplayer());
+        getCommand("tpv").setExecutor(new tpv());
         //注册事件
         Bukkit.getPluginManager().registerEvents(new checkIP(),this);
         Bukkit.getPluginManager().registerEvents(new tpTool(), this);

@@ -29,9 +29,7 @@ public class tpTool implements Listener {
         if (e.getItem() != null) {
             if (p.getItemInHand().getItemMeta().hasLore() && p.getItemInHand().getItemMeta().getLore().contains("§e§l点击传送")) {
                 if (p.getTargetBlock((Set<Material>) null, 2048).isLiquid()) { return; }
-                if (p.getTargetBlock((Set<Material>) null, 2048).isEmpty()) {
-                    p.sendMessage("§7请指向一个方块!");
-                    return; }
+                if (p.getTargetBlock((Set<Material>) null, 2048).isEmpty()) { return; }
                 int x = p.getTargetBlock((Set<Material>) null, 2048).getX(); //得到目标方块的XYZ
                 int z = p.getTargetBlock((Set<Material>) null, 2048).getZ();
                 int y = p.getTargetBlock((Set<Material>) null, 2048).getY();

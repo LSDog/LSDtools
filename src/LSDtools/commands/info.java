@@ -13,36 +13,28 @@ public class info implements CommandExecutor {
     @Override
     public boolean onCommand(final CommandSender sender, final Command command, final String label, final String[] args) {
         //插件的信息
-        if (args.length == 0 || !args[0].equalsIgnoreCase("reload")) {
+        if (args.length == 0 || args[0].equals("1")) {
             sender.sendMessage("§r>> §e§lLSDtools §a§lv " + LSDtools.pversion + " §r<< §7by LSDog.");
             sender.sendMessage("§5/LSDtools: §r插件信息");
+            sender.sendMessage("§5/LSDtools reload: §r重载插件");
+            sender.sendMessage("§5/LSDtools <页数>: §r察看第n页的提示");
+            sender.sendMessage("========== 1/2 ==========");
+        } else if (args[0].equals("2")) {
             sender.sendMessage("§5/lore: §r修改物品信息");
             sender.sendMessage("§5/crash: §r错误踢出/卡顿/崩溃某玩家");
             sender.sendMessage("§5/signedit: §r修改告示牌");
             sender.sendMessage("§5/gettools: §r获取一些小工具");
             sender.sendMessage("§5/checkplayer: §r检查某玩家信息");
-            sender.sendMessage("§5/LSDtools reload: §r重载插件");
-        }
-        //重载插件
-        else if (args[0].equalsIgnoreCase("reload")) {
+            sender.sendMessage("§5/tpv: §r隐身传送到某玩家");
+            sender.sendMessage("========== 2/2 ==========");
+        } else if (args[0].equalsIgnoreCase("reload")) { //重载插件
             sender.sendMessage(LSDtools.pname + "重载中...");
-            File config = new File(LSDtools.MainTool.getDataFolder() + File.separator + "config.yml");
-            if (!config.exists()) { //如果文件不存在就创建
-                LSDtools.MainTool.getConfig().options().copyDefaults(true); //从自己那里复制过去....
-                LSDtools.MainTool.saveDefaultConfig(); //保存默认的配置
-            } else {
-                LSDtools.MainTool.reloadConfig(); //有的话就重载配置好了
-            }
+            LSDtools.MainTool.reloadConfig(); //有的话就重载配置好了
             sender.sendMessage(LSDtools.pname + "重载完毕！");
             return true;
+        } else {
+            return true;
         }
-        //参数过多的提示
-        else if (args.length > 1) {
-            sender.sendMessage(LSDtools.pname + "参数过多");
-            return false;
-        }
-        //保险起见
-        else sender.sendMessage(LSDtools.pname + "发生了未知的错误");
-        return false;
+        return true;
     }
 }
