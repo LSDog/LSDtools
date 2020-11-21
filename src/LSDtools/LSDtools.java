@@ -1,5 +1,6 @@
 package LSDtools;
 
+import LSDtools.AI.EventMessage;
 import LSDtools.AI.message;
 import LSDtools.commands.*;
 import LSDtools.player.checkIP;
@@ -50,6 +51,7 @@ public final class LSDtools extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new checkIP(),this);
         Bukkit.getPluginManager().registerEvents(new tpTool(), this);
         Bukkit.getPluginManager().registerEvents(new message(), this);
+        Bukkit.getPluginManager().registerEvents(new EventMessage(), this);
         getServer().getConsoleSender().sendMessage(ChatColor.GOLD + "[LSDtools] " + ChatColor.YELLOW + "插件成功加载完毕");
     }
 
