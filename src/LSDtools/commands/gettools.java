@@ -2,20 +2,12 @@ package LSDtools.commands;
 
 import LSDtools.LSDtools;
 import LSDtools.utils.Isnumber;
-import LSDtools.world.tools.Tools;
-import LSDtools.world.tools.tpTool;
-import org.bukkit.Bukkit;
+import LSDtools.world.tools.allTools;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
-
 public class gettools implements CommandExecutor {
-    private final Tools Tools = new Tools();
+    private final allTools allTools = new allTools();
     private final Isnumber Isnumber = new Isnumber();
 
     @Override
@@ -28,6 +20,7 @@ public class gettools implements CommandExecutor {
         if (args.length < 1) { //没有参数则介绍小工具
             p.sendMessage(LSDtools.pname + "用法: /gettools <序号> [玩家]");
             p.sendMessage(LSDtools.pname + "1. §r传送棒");
+            p.sendMessage(LSDtools.pname + "2. §r实体删除棒 (随意删除其他插件实体可能会导致错误!)");
             return true;
         }
         if (args.length > 2) { //参数过多提示
@@ -37,12 +30,12 @@ public class gettools implements CommandExecutor {
         //获取tool
         if (Isnumber.isnum(args[0])) {
             int tool = Integer.parseInt(args[0]);
-            if (Tools.getTool(tool) != null) {
-                String DisplayName = Tools.getTool(tool).getItemMeta().getDisplayName();
+            if (allTools.getTool(tool) != null) {
+                String DisplayName = allTools.getTool(tool).getItemMeta().getDisplayName();
                 if (args.length == 2) { //若指定玩家
                     if (p.getServer().getPlayer(args[1]) != null) {
                         Player p1 = p.getServer().getPlayer(args[1]);
-                        p1.getInventory().addItem(Tools.getTool(tool));
+                        p1.getInventory().addItem(allTools.getTool(tool));
                         p.sendMessage(LSDtools.pname + p1.getName() + "§r§l ➡ " + DisplayName);
                         p1.sendMessage(LSDtools.pname + "收到一个" + DisplayName);
                         return true;
@@ -51,7 +44,7 @@ public class gettools implements CommandExecutor {
                         return true;
                     }
                 } else { //若未指定玩家，则发给自己
-                    p.getPlayer().getInventory().addItem(Tools.getTool(tool));
+                    p.getPlayer().getInventory().addItem(allTools.getTool(tool));
                     p.sendMessage(LSDtools.pname + "收到一个" + DisplayName);
                     return true;
                 }

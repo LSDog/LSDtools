@@ -27,7 +27,8 @@ public class tpTool implements Listener {
     public void tp(PlayerInteractEvent e) {
         Player p = e.getPlayer();
         if (e.getItem() != null) {
-            if (p.getItemInHand().getItemMeta().hasLore() && p.getItemInHand().getItemMeta().getLore().contains("§e§l点击传送")) {
+            if (p.getItemInHand().getItemMeta().hasLore()
+                    && p.getItemInHand().getItemMeta().getLore().contains("§e§l点击传送")) {
                 if (p.getTargetBlock((Set<Material>) null, 2048).isLiquid()) { return; }
                 if (p.getTargetBlock((Set<Material>) null, 2048).isEmpty()) { return; }
                 int x = p.getTargetBlock((Set<Material>) null, 2048).getX(); //得到目标方块的XYZ
@@ -52,7 +53,7 @@ public class tpTool implements Listener {
                         e.setCancelled(true); //取消造成的一切额外事件
                         return;
                     }
-                    ++y; //如果全部不成立则再往上一格找
+                    y = y + 1; //如果全部不成立则再往上一格找
                 }
             }
         }

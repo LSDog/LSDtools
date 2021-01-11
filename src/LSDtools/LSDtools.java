@@ -5,6 +5,7 @@ import LSDtools.AI.message;
 import LSDtools.commands.*;
 import LSDtools.player.checkIP;
 import LSDtools.world.signedit;
+import LSDtools.world.tools.entityRemoverTool;
 import LSDtools.world.tools.tpTool;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -48,10 +49,12 @@ public final class LSDtools extends JavaPlugin {
         getCommand("crash").setExecutor(new crashplayer());
         getCommand("tpv").setExecutor(new tpv());
         //注册事件
-        Bukkit.getPluginManager().registerEvents(new checkIP(),this);
+        Bukkit.getPluginManager().registerEvents(new checkIP(), this);
         Bukkit.getPluginManager().registerEvents(new tpTool(), this);
-        Bukkit.getPluginManager().registerEvents(new message(), this);
-        Bukkit.getPluginManager().registerEvents(new EventMessage(), this);
+        Bukkit.getPluginManager().registerEvents(new entityRemoverTool(), this);
+        //Bukkit.getPluginManager().registerEvents(new message(), this);
+        //Bukkit.getPluginManager().registerEvents(new EventMessage(), this);
+        // 咕咕咕 (
         getServer().getConsoleSender().sendMessage(ChatColor.GOLD + "[LSDtools] " + ChatColor.YELLOW + "插件成功加载完毕");
     }
 
